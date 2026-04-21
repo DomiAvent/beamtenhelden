@@ -75,13 +75,8 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer">
-                    <!-- HINWEIS: Hier das Logo "Website.png" einfügen. Als Fallback nutze ich Text. -->
-                    <div class="text-2xl font-black text-aventus-navy tracking-tight flex items-center gap-2">
-                        <div class="w-8 h-8 bg-aventus-blue rounded-md flex items-center justify-center">
-                            <span class="text-white text-lg leading-none">A</span>
-                        </div>
-                        AVENTUS <span class="text-aventus-sky font-light hidden sm:inline">| Beamtenhelden</span>
-                    </div>
+                    <!-- ✏️ HIER ÄNDERN: Dein Logo ist jetzt eingebaut. -->
+                    <img src="Website.png" alt="Aventus Logo" class="h-10 w-auto object-contain">
                 </div>
                 
                 <!-- Desktop Menu -->
@@ -89,7 +84,8 @@
                     <a href="#vorteile" class="font-semibold hover:text-aventus-blue transition-colors">Vorteile</a>
                     <a href="#social" class="font-semibold hover:text-aventus-blue transition-colors">Einblicke</a>
                     <a href="#berater" class="font-semibold hover:text-aventus-blue transition-colors">Deine Berater</a>
-                    <a href="#berater" class="bg-aventus-coral text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-aventus-coral/30 hover:bg-red-500 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                    <!-- ✏️ HIER ÄNDERN: Trage bei href="..." deinen Calendly/Buchungs-Link ein -->
+                    <a href="https://dein-calendly-link.de" target="_blank" class="bg-aventus-coral text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-aventus-coral/30 hover:bg-red-500 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                         Termin buchen
                     </a>
                 </div>
@@ -140,10 +136,12 @@
                     Beihilfe, PKV, Dienstunfähigkeit? Wir übersetzen das Beamtendeutsch und finden die Absicherung, die wirklich zu dir passt. 100% unabhängig, 100% digital.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="#berater" class="bg-aventus-coral text-white px-8 py-4 rounded-full font-bold text-lg shadow-[0_0_20px_rgba(252,91,71,0.4)] hover:shadow-[0_0_30px_rgba(252,91,71,0.6)] hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+                    <!-- ✏️ HIER ÄNDERN: Buchungslink für den großen Button ganz oben -->
+                    <a href="https://dein-calendly-link.de" target="_blank" class="bg-aventus-coral text-white px-8 py-4 rounded-full font-bold text-lg shadow-[0_0_20px_rgba(252,91,71,0.4)] hover:shadow-[0_0_30px_rgba(252,91,71,0.6)] hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
                         Kostenloses Erstgespräch <i class="ph-bold ph-arrow-right"></i>
                     </a>
-                    <a href="#social" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-4 rounded-full font-bold text-lg backdrop-blur-sm transition-all flex items-center justify-center gap-2">
+                    <!-- ✏️ HIER ÄNDERN: Link zu eurem Instagram-Profil -->
+                    <a href="https://instagram.com/aventus" target="_blank" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-4 rounded-full font-bold text-lg backdrop-blur-sm transition-all flex items-center justify-center gap-2">
                         <i class="ph-fill ph-play-circle text-2xl"></i> Lerne uns kennen
                     </a>
                 </div>
@@ -210,7 +208,9 @@
             <div id="reel-container" class="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar snap-x-mandatory pb-8 pt-4">
                 
                 <!-- Reel 1 -->
-                <div class="snap-center-item shrink-0 w-[260px] h-[460px] rounded-3xl overflow-hidden relative shadow-lg group cursor-pointer border border-aventus-grey">
+                <!-- ✏️ HIER ÄNDERN: Link direkt zum Instagram/TikTok Post (href="...") -->
+                <a href="https://instagram.com/p/dein-post-link" target="_blank" class="snap-center-item shrink-0 w-[260px] h-[460px] rounded-3xl overflow-hidden relative shadow-lg group cursor-pointer border border-aventus-grey block">
+                    <!-- ✏️ HIER ÄNDERN: Titelbild des Reels. Lade ein Bild hoch und trage hier z.B. src="reel1.jpg" ein -->
                     <img src="https://images.unsplash.com/photo-1616469829581-73993eb86b02?auto=format&fit=crop&w=400&q=80" alt="Reel Thumbnail" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="absolute inset-0 reel-overlay flex flex-col justify-end p-5">
                         <div class="bg-white/20 backdrop-blur-md w-12 h-12 rounded-full flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
@@ -220,12 +220,13 @@
                             <i class="ph-fill ph-instagram-logo text-xl"></i>
                             <span class="text-xs font-bold bg-aventus-coral px-2 py-1 rounded-full">Neu</span>
                         </div>
+                        <!-- ✏️ HIER ÄNDERN: Text, der auf dem Reel steht -->
                         <p class="text-white font-bold leading-tight line-clamp-2">PKV vs. GKV als Anwärter? Das musst du wissen! 🤯</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- Reel 2 -->
-                <div class="snap-center-item shrink-0 w-[260px] h-[460px] rounded-3xl overflow-hidden relative shadow-lg group cursor-pointer border border-aventus-grey">
+                <a href="https://tiktok.com/@aventus/video/..." target="_blank" class="snap-center-item shrink-0 w-[260px] h-[460px] rounded-3xl overflow-hidden relative shadow-lg group cursor-pointer border border-aventus-grey block">
                     <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" alt="Reel Thumbnail" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="absolute inset-0 reel-overlay flex flex-col justify-end p-5">
                         <div class="bg-white/20 backdrop-blur-md w-12 h-12 rounded-full flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
@@ -288,16 +289,19 @@
                     <div class="relative w-40 h-40 mb-6">
                         <!-- Background Blob -->
                         <div class="absolute inset-0 bg-aventus-blue rounded-full opacity-10 scale-110 group-hover:scale-125 transition-transform duration-500"></div>
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80" alt="Max Mustermann" class="relative z-10 w-full h-full object-cover rounded-full border-4 border-white shadow-md">
+                        <!-- ✏️ HIER ÄNDERN: Profilbild des Beraters (z.B. src="Felix.jpg") -->
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80" alt="Felix Weber" class="relative z-10 w-full h-full object-cover rounded-full border-4 border-white shadow-md">
                     </div>
+                    <!-- ✏️ HIER ÄNDERN: Berater Details -->
                     <h3 class="text-2xl font-black text-aventus-navy mb-1">Felix Weber</h3>
                     <p class="text-aventus-teal font-semibold mb-4">Spezialist für Lehramt & Polizei</p>
                     <p class="text-gray-500 text-sm mb-8 flex-grow">"Ich kenne die Hürden des Referendariats aus eigener Erfahrung. Lass uns deinen Papierkram erledigen."</p>
                     
-                    <button class="w-full bg-aventus-navy hover:bg-aventus-blue text-white font-bold py-4 rounded-xl transition-colors flex justify-center items-center gap-2 group-hover:bg-aventus-coral">
+                    <!-- ✏️ HIER ÄNDERN: Persönlicher Kalender-Link für diesen speziellen Berater -->
+                    <a href="https://calendly.com/felix-weber" target="_blank" class="w-full bg-aventus-navy hover:bg-aventus-blue text-white font-bold py-4 rounded-xl transition-colors flex justify-center items-center gap-2 group-hover:bg-aventus-coral">
                         <i class="ph-bold ph-calendar-plus text-xl"></i>
                         Termin bei Felix buchen
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Advisor 2 -->
