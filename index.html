@@ -1,456 +1,858 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aventus | Dein Start in den Beamtenstatus</title>
-    
-    <!-- Google Fonts: Source Sans 3 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS (via CDN for single-file deployment) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Configuration (Aventus Colors) -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        aventus: {
-                            navy: '#030039',
-                            coral: '#fc5b47',
-                            blue: '#2200c8',
-                            sky: '#51bdff',
-                            teal: '#00bd9e',
-                            grey: '#dcdcdc',
-                            light: '#f8f9fa'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['"Source Sans 3"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beamtenhelden · Versicherung für Beamte</title>
+  <meta name="description" content="Versicherungsmakler spezialisiert auf Beamte, Referendare und Anwärter. Beihilfe, DU, Altersvorsorge – kostenlos und unverbindlich beraten." />
 
-    <!-- Custom CSS for specific elements like the Reel-Slider -->
-    <style>
-        html { scroll-behavior: smooth; }
-        
-        /* Hide scrollbar for the reel slider but keep functionality */
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Source+Sans+3:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
 
-        /* Snap scrolling for reels */
-        .snap-x-mandatory {
-            scroll-snap-type: x mandatory;
-        }
-        .snap-center-item {
-            scroll-snap-align: center;
-        }
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fraunces', 'Georgia', 'serif'],
+            body: ['"Source Sans 3"', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
 
-        /* Reel Gradient Overlay */
-        .reel-overlay {
-            background: linear-gradient(to top, rgba(3,0,57,0.9) 0%, rgba(3,0,57,0) 50%);
-        }
-    </style>
-    
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    html, body { font-family: 'Source Sans 3', sans-serif; }
+    .font-display { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
+    .font-body { font-family: 'Source Sans 3', sans-serif; }
+
+    @keyframes floatA { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(14px, -18px) rotate(3deg); } }
+    @keyframes floatB { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(-16px, 12px) rotate(-2deg); } }
+    @keyframes floatC { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(10px, 10px) rotate(4deg); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes pulse-dot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } }
+
+    .float-a { animation: floatA 9s ease-in-out infinite; }
+    .float-b { animation: floatB 11s ease-in-out infinite; }
+    .float-c { animation: floatC 13s ease-in-out infinite; }
+    .fade-up { animation: fadeUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+    .fade-up-d1 { animation: fadeUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.12s forwards; opacity: 0; }
+    .fade-up-d2 { animation: fadeUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.24s forwards; opacity: 0; }
+    .fade-up-d3 { animation: fadeUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.36s forwards; opacity: 0; }
+    .fade-up-d4 { animation: fadeUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards; opacity: 0; }
+    .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+    .marquee-track { animation: marquee 45s linear infinite; }
+
+    .grain-bg { position: relative; }
+    .grain-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+      opacity: 0.05; pointer-events: none; mix-blend-mode: multiply;
+    }
+
+    .btn-primary {
+      position: relative; overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      isolation: isolate;
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      width: 0; height: 0; background: #2200c8; border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s ease, height 0.5s ease;
+      z-index: -1;
+    }
+    .btn-primary:hover::after { width: 400px; height: 400px; }
+
+    .card-hover { transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .card-hover:hover { transform: translateY(-6px); }
+
+    .reel-card { transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .reel-card:hover { transform: scale(1.04) translateY(-4px); }
+
+    .advisor-card { transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+    ::selection { background: #2200c8; color: white; }
+    html { scroll-behavior: smooth; }
+
+    .ticker-item { display: inline-flex; align-items: center; gap: 2rem; padding: 0 2rem; }
+
+    .section-label { display: inline-flex; align-items: center; gap: 0.75rem; }
+    .section-label::before { content: ''; width: 24px; height: 1px; background: currentColor; opacity: 0.4; }
+
+    .arrow-link:hover svg { transform: translate(4px, -4px); }
+    .arrow-link svg { transition: transform 0.3s ease; }
+
+    .custom-scroll::-webkit-scrollbar { height: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: rgba(3,0,57,0.05); border-radius: 10px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(3,0,57,0.2); border-radius: 10px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(3,0,57,0.4); }
+
+    /* FAQ toggle */
+    .faq-item[data-open="true"] .faq-answer { max-height: 400px; opacity: 1; padding-bottom: 24px; }
+    .faq-item[data-open="true"] .faq-icon-wrap { background: #030039; border-color: #030039; transform: rotate(180deg); }
+    .faq-item[data-open="true"] .faq-icon-wrap svg { color: #fff; }
+    .faq-answer { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); padding-bottom: 0; }
+    .faq-icon-wrap { transition: all 0.3s ease; }
+    .faq-icon-wrap svg { transition: color 0.3s ease; }
+
+    /* Mobile menu */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* Advisor hidden panels */
+    .advisor-panel { display: none; }
+    .advisor-panel.active { display: block; }
+
+    /* Tab buttons */
+    .tab-btn {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.3s ease;
+    }
+    .tab-btn:hover { background: rgba(255,255,255,0.15); }
+    .tab-btn.active {
+      background: #fff;
+      color: #030039;
+      border-color: #fff;
+    }
+
+    /* Mini cards */
+    .mini-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+    }
+    .mini-card:hover { background: rgba(255,255,255,0.1); }
+    .mini-card.active {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.25);
+    }
+  </style>
 </head>
-<body class="font-sans text-aventus-navy bg-white antialiased">
+<body class="min-h-screen bg-[#fafaf7] text-[#030039] antialiased overflow-x-hidden">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-aventus-grey transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center cursor-pointer">
-                    <!-- ✏️ HIER ÄNDERN: Dein Logo ist jetzt eingebaut. -->
-                    <img src="Website.png" alt="Aventus Logo" class="h-10 w-auto object-contain">
-                </div>
-                
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#vorteile" class="font-semibold hover:text-aventus-blue transition-colors">Vorteile</a>
-                    <a href="#social" class="font-semibold hover:text-aventus-blue transition-colors">Einblicke</a>
-                    <a href="#berater" class="font-semibold hover:text-aventus-blue transition-colors">Deine Berater</a>
-                    <!-- ✏️ HIER ÄNDERN: Trage bei href="..." deinen Calendly/Buchungs-Link ein -->
-                    <a href="https://dein-calendly-link.de" target="_blank" class="bg-aventus-coral text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-aventus-coral/30 hover:bg-red-500 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                        Termin buchen
-                    </a>
-                </div>
+  <!-- NAVIGATION -->
+  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 py-5 bg-transparent transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
+      <a href="#" class="font-display text-2xl tracking-tight text-[#030039]">
+        Beamten<span class="italic font-medium">helden</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm">
+        <a href="#vorteile" class="text-[#030039]/70 hover:text-[#030039] transition">Leistungen</a>
+        <a href="#berater" class="text-[#030039]/70 hover:text-[#030039] transition">Berater</a>
+        <a href="#wissen" class="text-[#030039]/70 hover:text-[#030039] transition">Wissen</a>
+        <a href="#faq" class="text-[#030039]/70 hover:text-[#030039] transition">FAQ</a>
+      </div>
+      <a href="#berater" class="btn-primary hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-[#030039] text-white rounded-full text-sm font-medium hover:text-white">
+        <span class="relative z-10">Termin buchen</span>
+        <svg class="relative z-10 w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 17L17 7M17 7H8M17 7V16" />
+        </svg>
+      </a>
+      <button id="menu-toggle" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar w-6 h-[1.5px] bg-[#030039] transition-all"></span>
+        <span class="menu-bar w-6 h-[1.5px] bg-[#030039] transition-all"></span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="md:hidden bg-[#fafaf7] border-t border-[#030039]/5 px-6 py-6 flex-col gap-4">
+      <a href="#vorteile" class="mobile-link">Leistungen</a>
+      <a href="#berater" class="mobile-link">Berater</a>
+      <a href="#wissen" class="mobile-link">Wissen</a>
+      <a href="#faq" class="mobile-link">FAQ</a>
+      <a href="#berater" class="mobile-link mt-2 px-5 py-3 bg-[#030039] text-white rounded-full text-sm text-center">Termin buchen</a>
+    </div>
+  </nav>
 
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-aventus-navy hover:text-aventus-blue focus:outline-none">
-                        <i class="ph ph-list text-3xl"></i>
-                    </button>
-                </div>
+  <!-- HERO -->
+  <section id="hero" class="relative min-h-screen flex items-center pt-28 md:pt-32 pb-16 overflow-hidden grain-bg">
+    <div class="shape float-a absolute top-[10%] right-[6%] w-[220px] h-[220px] md:w-[320px] md:h-[320px] rounded-full pointer-events-none"
+         data-mx="20" data-my="20"
+         style="background: radial-gradient(circle at 30% 30%, #2200c8 0%, #030039 100%); transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);"></div>
+    <div class="shape float-b absolute top-[18%] left-[-3%] w-[180px] h-[180px] md:w-[260px] md:h-[260px] pointer-events-none"
+         data-mx="-25" data-my="-25"
+         style="background: #51bdff; clip-path: path('M 120 0 Q 180 80 120 240 Q 60 140 0 60 Q 60 30 120 0 Z'); transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);"></div>
+    <div class="shape float-c absolute bottom-[8%] left-[4%] w-[150px] h-[150px] md:w-[200px] md:h-[200px] pointer-events-none"
+         data-mx="15" data-my="15"
+         style="background: #2200c8; clip-path: polygon(0% 100%, 100% 70%, 60% 0%); transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);"></div>
+    <div class="shape float-a absolute bottom-[12%] right-[10%] w-[130px] h-[130px] md:w-[180px] md:h-[180px] rounded-[32px] pointer-events-none"
+         data-mx="-18" data-my="-18" data-rotate="12"
+         style="background: #fc5b47; transform: rotate(12deg); transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 md:px-10 w-full z-10">
+      <div class="fade-up mb-6 section-label">
+        <span class="text-xs tracking-[0.25em] uppercase text-[#030039]/70 font-medium">
+          Versicherungsmakler · Spezialisiert auf Beamte
+        </span>
+      </div>
+
+      <h1 class="font-display text-[52px] sm:text-[72px] md:text-[96px] lg:text-[120px] leading-[0.92] tracking-[-0.035em] text-[#030039] mb-8 max-w-5xl">
+        <span class="block overflow-hidden"><span class="fade-up inline-block">Absicherung,</span></span>
+        <span class="block overflow-hidden"><span class="fade-up-d1 inline-block italic font-medium" style="color: #2200c8;">die zu dir</span></span>
+        <span class="block overflow-hidden"><span class="fade-up-d2 inline-block">passt<span style="color: #fc5b47;">.</span></span></span>
+      </h1>
+
+      <div class="grid md:grid-cols-12 gap-8 items-end mb-14">
+        <div class="md:col-span-7 fade-up-d3">
+          <p class="text-base md:text-lg text-[#030039]/80 leading-relaxed font-light max-w-xl">
+            Wir sind Makler für Beamte, Referendare und Anwärter. Keine Standardverträge. Keine Provisions­politik. Nur Absicherung, die wirklich greift.
+          </p>
+        </div>
+        <div class="md:col-span-5 fade-up-d4 flex flex-col sm:flex-row gap-3 md:justify-end">
+          <a href="#berater" class="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#030039] text-white rounded-full font-medium text-sm hover:text-white">
+            <span class="relative z-10">Kostenloses Gespräch</span>
+            <svg class="relative z-10 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7 17L17 7M17 7H8M17 7V16" />
+            </svg>
+          </a>
+          <a href="#vorteile" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-[#030039]/25 rounded-full font-medium text-sm hover:bg-[#030039]/5 transition text-[#030039]">
+            Leistungen ansehen
+          </a>
+        </div>
+      </div>
+
+      <div class="fade-up-d4 pt-10 border-t border-[#030039]/10 grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12">
+        <div>
+          <div class="font-display text-4xl md:text-5xl tracking-tight text-[#030039]">
+            2.400<span style="color: #2200c8;">+</span>
+          </div>
+          <div class="text-xs md:text-sm text-[#030039]/70 mt-1">Beamte betreut</div>
+        </div>
+        <div>
+          <div class="font-display text-4xl md:text-5xl tracking-tight text-[#030039]">
+            100<span class="text-lg align-super text-[#030039]/60 ml-0.5">%</span>
+          </div>
+          <div class="text-xs md:text-sm text-[#030039]/70 mt-1">Persönlich</div>
+        </div>
+        <div class="col-span-2 md:col-span-1">
+          <div class="font-display text-4xl md:text-5xl tracking-tight text-[#030039] flex items-center gap-2">
+            <span class="pulse-dot inline-block w-3 h-3 rounded-full" style="background: #00bd9e;"></span>
+            Live
+          </div>
+          <div class="text-xs md:text-sm text-[#030039]/70 mt-1">Berater verfügbar</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="relative py-6 bg-[#030039] text-white overflow-hidden">
+    <div class="flex marquee-track whitespace-nowrap">
+      <div class="flex items-center shrink-0" id="marquee-content"></div>
+      <div class="flex items-center shrink-0" id="marquee-content-2"></div>
+    </div>
+  </div>
+
+  <!-- VORTEILE -->
+  <section id="vorteile" class="py-24 md:py-32 relative">
+    <div class="max-w-7xl mx-auto px-6 md:px-10">
+      <div class="grid md:grid-cols-12 gap-8 mb-16">
+        <div class="md:col-span-4">
+          <div class="section-label text-[#030039]/70 mb-4">
+            <span class="text-xs tracking-[0.25em] uppercase font-medium">Unsere Leistungen</span>
+          </div>
+        </div>
+        <div class="md:col-span-8">
+          <h2 class="font-display text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.03em] text-[#030039]">
+            Beamtentum verdient
+            <span class="italic font-medium" style="color: #2200c8;">spezialisierte</span>
+            Beratung.
+          </h2>
+          <p class="mt-6 text-base md:text-lg text-[#030039]/80 font-light max-w-2xl leading-relaxed">
+            Generalisten kennen Beihilfe nur vom Hörensagen. Wir leben sie. Seit Jahren spezialisiert auf den öffentlichen Dienst – mit allen rechtlichen Besonderheiten.
+          </p>
+        </div>
+      </div>
+      <div id="benefits-grid" class="grid md:grid-cols-2 gap-5"></div>
+    </div>
+  </section>
+
+  <!-- BERATER -->
+  <section id="berater" class="py-24 md:py-32 bg-[#030039] text-white relative overflow-hidden">
+    <div class="absolute top-[-100px] right-[-100px] w-[500px] h-[500px] rounded-full opacity-20" style="background: radial-gradient(circle, #2200c8 0%, transparent 70%);"></div>
+    <div class="absolute bottom-[-150px] left-[-100px] w-[400px] h-[400px] rounded-full opacity-15" style="background: radial-gradient(circle, #51bdff 0%, transparent 70%);"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 md:px-10">
+      <div class="grid md:grid-cols-12 gap-8 mb-14">
+        <div class="md:col-span-4">
+          <div class="section-label text-white/70 mb-4">
+            <span class="text-xs tracking-[0.25em] uppercase font-medium">Dein Team</span>
+          </div>
+        </div>
+        <div class="md:col-span-8">
+          <h2 class="font-display text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.03em] text-white">
+            Drei Köpfe. <span class="italic font-medium" style="color: #51bdff;">Ein Ziel.</span>
+          </h2>
+          <p class="mt-6 text-base md:text-lg text-white/85 font-light max-w-2xl leading-relaxed">
+            Such dir deine:n Berater:in selbst aus. Jede:r ist Experte und hat einen eigenen Microsoft-Bookings-Kalender. Oder buche direkt beim Team, falls die Auswahl zu schwer fällt.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-8" id="advisor-tabs"></div>
+
+      <div id="advisor-panels" class="bg-white text-[#030039] rounded-3xl overflow-hidden shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] advisor-card"></div>
+
+      <!-- Team Booking -->
+      <div class="mt-8 p-6 md:p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-2 text-xs tracking-[0.25em] uppercase text-white/70">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            Keine Präferenz?
+          </div>
+          <div class="font-display text-xl md:text-2xl text-white">
+            Wir weisen dir den passenden Berater zu.
+          </div>
+          <div class="text-sm text-white/70 mt-1 font-light">
+            Gemeinsamer Team-Kalender · nächster freier Slot · keine Wartezeit
+          </div>
+        </div>
+        <a id="team-booking" href="https://outlook.office.com/book/Beamtenhelden@aventusgruppe.de/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-[#030039] rounded-full font-medium text-sm hover:bg-[#51bdff] hover:text-white transition shrink-0">
+          Team-Termin buchen
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M7 17L17 7M17 7H8M17 7V16" />
+          </svg>
+        </a>
+      </div>
+
+      <div id="advisor-mini-cards" class="grid md:grid-cols-3 gap-4 mt-5"></div>
+    </div>
+  </section>
+
+  <!-- REELS -->
+  <section id="wissen" class="py-24 md:py-32 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 md:px-10">
+      <div class="grid md:grid-cols-12 gap-8 mb-12">
+        <div class="md:col-span-4">
+          <div class="section-label text-[#030039]/70 mb-4">
+            <span class="text-xs tracking-[0.25em] uppercase font-medium">@beamtenhelden</span>
+          </div>
+        </div>
+        <div class="md:col-span-8 flex items-end justify-between flex-wrap gap-4">
+          <h2 class="font-display text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.03em] text-[#030039]">
+            Wissen, das <span class="italic font-medium" style="color: #2200c8;">hängen bleibt.</span>
+          </h2>
+          <a href="https://www.instagram.com/beamtenhelden/" target="_blank" rel="noopener noreferrer" class="arrow-link inline-flex items-center gap-2 text-sm text-[#030039]/80 hover:text-[#030039] transition border-b border-[#030039]/25 hover:border-[#030039] pb-1">
+            Alle Reels auf Instagram
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7 17L17 7M17 7H8M17 7V16" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 md:px-10">
+      <div id="reels-scroll" class="flex gap-4 overflow-x-auto pb-6 snap-x snap-mandatory custom-scroll"></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-24 md:py-32 bg-white border-y border-[#030039]/5">
+    <div class="max-w-7xl mx-auto px-6 md:px-10">
+      <div class="grid md:grid-cols-12 gap-12">
+        <div class="md:col-span-5">
+          <div class="section-label text-[#030039]/70 mb-4">
+            <span class="text-xs tracking-[0.25em] uppercase font-medium">Häufige Fragen</span>
+          </div>
+          <h2 class="font-display text-4xl md:text-5xl lg:text-6xl leading-[0.95] tracking-[-0.03em] text-[#030039] mb-6">
+            Alles, <span class="italic font-medium" style="color: #2200c8;">was du</span> wissen musst.
+          </h2>
+          <p class="text-[#030039]/80 font-light leading-relaxed mb-8 max-w-md">
+            Deine Frage nicht dabei? Schreib uns direkt – wir antworten meist innerhalb weniger Stunden.
+          </p>
+          <a href="mailto:service.augsburg@aventusgruppe.de" class="arrow-link inline-flex items-center gap-2 text-sm text-[#030039] hover:text-[#2200c8] border-b border-[#030039]/25 hover:border-[#2200c8] pb-1">
+            service.augsburg@aventusgruppe.de
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7 17L17 7M17 7H8M17 7V16" />
+            </svg>
+          </a>
+        </div>
+        <div class="md:col-span-7">
+          <div id="faq-list" class="space-y-2"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-24 md:py-32 bg-[#030039] text-white relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-25" style="background: radial-gradient(circle, #2200c8 0%, transparent 70%);"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full opacity-20" style="background: radial-gradient(circle, #51bdff 0%, transparent 70%);"></div>
+    <div class="relative max-w-7xl mx-auto px-6 md:px-10 text-center">
+      <div class="mb-6 inline-flex items-center gap-3 text-white/70">
+        <span class="w-6 h-[1px] bg-white/40"></span>
+        <span class="text-xs tracking-[0.3em] uppercase">Bereit?</span>
+        <span class="w-6 h-[1px] bg-white/40"></span>
+      </div>
+      <h2 class="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.92] tracking-[-0.03em] max-w-5xl mx-auto text-white">
+        Lass uns <span class="italic font-medium" style="color: #51bdff;">reden.</span>
+      </h2>
+      <p class="mt-8 text-base md:text-lg text-white/85 font-light max-w-xl mx-auto leading-relaxed">
+        Kostenlos. Unverbindlich. 30 Minuten. Wir zeigen dir, wo du unter- oder überversichert bist.
+      </p>
+      <a href="#berater" class="mt-10 inline-flex items-center gap-3 px-8 py-4 bg-white text-[#030039] rounded-full font-medium hover:bg-[#51bdff] hover:text-white transition-all duration-300">
+        Berater wählen & Termin buchen
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M7 17L17 7M17 7H8M17 7V16" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#fafaf7] pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-10">
+      <div class="grid md:grid-cols-12 gap-10 mb-14">
+        <div class="md:col-span-5">
+          <div class="font-display text-3xl tracking-tight text-[#030039] mb-4">
+            Beamten<span class="italic font-medium">helden</span>
+          </div>
+          <p class="text-[#030039]/70 font-light max-w-sm leading-relaxed mb-6">
+            Versicherungsmakler mit Spezialisierung auf Beamte, Referendare und Anwärter.
+          </p>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#030039]/10 text-xs text-[#030039]/70">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#2200c8]"></span>
+            Ein Unternehmen der Aventus Maklergruppe
+          </div>
+        </div>
+
+        <div class="md:col-span-3">
+          <div class="text-xs tracking-[0.25em] uppercase text-[#030039]/50 mb-4 font-medium">Kontakt</div>
+          <div class="space-y-1.5 text-[#030039]/85 text-sm">
+            <div>Aventus Versicherungsmakler</div>
+            <div>Augsburg AG</div>
+            <div class="pt-2">Daimlerstraße 19</div>
+            <div>86368 Gersthofen</div>
+            <div class="pt-3 space-y-1">
+              <a href="tel:+4982122802280" class="block hover:text-[#2200c8] transition">0821 22802280</a>
+              <a href="mailto:service.augsburg@aventusgruppe.de" class="block hover:text-[#2200c8] transition break-all">service.augsburg@aventusgruppe.de</a>
             </div>
+          </div>
         </div>
-        
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-aventus-grey">
-            <div class="px-4 pt-2 pb-6 space-y-2 text-center shadow-inner">
-                <a href="#vorteile" class="block px-3 py-3 font-semibold text-lg hover:bg-aventus-light rounded-md">Vorteile</a>
-                <a href="#social" class="block px-3 py-3 font-semibold text-lg hover:bg-aventus-light rounded-md">Einblicke</a>
-                <a href="#berater" class="block px-3 py-3 font-semibold text-lg hover:bg-aventus-light rounded-md">Deine Berater</a>
-                <a href="#berater" class="block mt-4 bg-aventus-coral text-white px-6 py-3 rounded-full font-bold shadow-lg">
-                    Termin buchen
-                </a>
+
+        <div class="md:col-span-2">
+          <div class="text-xs tracking-[0.25em] uppercase text-[#030039]/50 mb-4 font-medium">Navigation</div>
+          <div class="space-y-1.5 text-[#030039]/85 text-sm">
+            <a href="#vorteile" class="block hover:text-[#2200c8] transition">Leistungen</a>
+            <a href="#berater" class="block hover:text-[#2200c8] transition">Berater</a>
+            <a href="#wissen" class="block hover:text-[#2200c8] transition">Reels</a>
+            <a href="#faq" class="block hover:text-[#2200c8] transition">FAQ</a>
+          </div>
+        </div>
+
+        <div class="md:col-span-2">
+          <div class="text-xs tracking-[0.25em] uppercase text-[#030039]/50 mb-4 font-medium">Rechtliches</div>
+          <div class="space-y-1.5 text-[#030039]/85 text-sm">
+            <a href="#" class="block hover:text-[#2200c8] transition">Impressum</a>
+            <a href="#" class="block hover:text-[#2200c8] transition">Datenschutz</a>
+            <a href="#" class="block hover:text-[#2200c8] transition">AGB</a>
+            <a href="#" class="block hover:text-[#2200c8] transition">Erstinformation</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-[#030039]/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        <div class="text-xs text-[#030039]/60">© 2026 Aventus Versicherungsmakler Augsburg AG. Alle Rechte vorbehalten.</div>
+        <div class="text-xs text-[#030039]/60">Gemacht in Augsburg · <span class="italic font-display">mit Haltung</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== DATA =====
+    const advisors = [
+      {
+        name: "Vanessa Eckstein",
+        firstName: "Vanessa",
+        role: "Senior Kundenberaterin",
+        specialty: "PKV, Beihilfe, Dienstunfähigkeit & Altersvorsorge",
+        bio: "Vanessa betreut seit vielen Jahren Beamte in allen Karrierephasen – vom Anwärter bis zur Pensionierung. Ihre Stärke: komplexe Beihilfe­regelungen verständlich erklären.",
+        bookingUrl: "https://outlook.office365.com/owa/calendar/Beamtenhelden@/bookings/",
+        photo: "vanessa.png",
+        initials: "VE",
+        color: "#2200c8",
+        accent: "#51bdff",
+        expertise: ["Private Krankenversicherung", "Beihilfeergänzung", "DU-Absicherung", "Private Vorsorge", "Pflegezusatz", "Erste Absicherung", "Haftpflicht"],
+      },
+      {
+        name: "Thomas Kleinhappel",
+        firstName: "Thomas",
+        role: "Senior Kundenberater",
+        specialty: "PKV, Beihilfe, Dienstunfähigkeit & Altersvorsorge",
+        bio: "Thomas ist der Profi für komplexe Fälle – insbesondere im höheren Dienst. Mit jahrelanger Erfahrung in Ruhestandsplanung und steueroptimierter Vorsorge.",
+        bookingUrl: "https://outlook.office365.com/owa/calendar/Beamtenhelden@/bookings/",
+        photo: "thomas.png",
+        initials: "TK",
+        color: "#030039",
+        accent: "#2200c8",
+        expertise: ["Private Krankenversicherung", "Beihilfeergänzung", "DU-Absicherung", "Private Vorsorge", "Pflegezusatz", "Erste Absicherung", "Haftpflicht"],
+      },
+      {
+        name: "Michael Kleinhappel",
+        firstName: "Michael",
+        role: "Junior Berater",
+        specialty: "PKV, Beihilfe, Dienstunfähigkeit & Altersvorsorge",
+        bio: "Michael ist Ansprechpartner für Anwärter, Referendare und junge Beamte. Er kennt die Sorgen der jungen Generation und spricht ihre Sprache – ohne Versicherer-Deutsch.",
+        bookingUrl: "https://outlook.office.com/bookwithme/user/998fa230c5e84522a423e02a4dfa4fbd@aventusgruppe.de?anonymous&ismsaljsauthenabled&ep=bwmEmailSignature",
+        photo: "michael.png",
+        initials: "MK",
+        color: "#00bd9e",
+        accent: "#2200c8",
+        expertise: ["Private Krankenversicherung", "Beihilfeergänzung", "DU-Absicherung", "Private Vorsorge", "Pflegezusatz", "Erste Absicherung", "Haftpflicht"],
+      },
+    ];
+
+    const benefits = [
+      { num: "01", title: "Beihilfe", short: "Ergänzung ohne Lücken",
+        text: "Maßgeschneiderte Beihilfeergänzung für Beamte auf Lebenszeit, Probe und Widerruf. Wir kennen die Eigenheiten jedes Bundeslands.",
+        points: ["Tarifvergleich aller Anbieter", "Quotenoptimierung", "Anwartschaft für Anwärter"] },
+      { num: "02", title: "Dienstunfähigkeit", short: "DU mit echter Klausel",
+        text: "Standard-BU reicht selten. Wir sichern mit echter Beamtenklausel ab – inkl. Versetzung in den Ruhestand und allgemeiner Dienstunfähigkeit.",
+        points: ["Echte Beamtenklausel", "Nachversicherungsgarantie", "Dynamik­optionen"] },
+      { num: "03", title: "Altersvorsorge", short: "Ruhegehalt clever ergänzen",
+        text: "Das Ruhegehalt allein reicht häufig nicht. Optimierte Vorsorge speziell für den Beamtenstatus.",
+        points: ["Versorgungslücke berechnen", "Unabhängig vom Anbieter"] },
+      { num: "04", title: "Haftpflicht & Diensthaftpflicht", short: "Privat und im Dienst",
+        text: "Diensthaftpflicht ist für Beamte essenziell. Wir bündeln privat und beruflich in einer Police – ohne Doppelversicherung.",
+        points: ["Schlüsselverlust­deckung", "Regress­ansprüche", "Forderungs­ausfall"] },
+    ];
+
+    const reels = [
+      { title: "3 Dinge, die dir dein Dienstherr NIE erklärt", sub: "Die meisten Beamten machen diese Fehler", views: "447", duration: "0:58" },
+      { title: "Gesundheitszustand einfrieren?", sub: "Warum die kleine Anwartschaft für angehende Lehrer ein muss ist", views: "397", duration: "0:56" },
+      { title: "Referendariat in sicht?", sub: "Jetzt gehts an die PKV Wahl, aber wo anfangen?", views: "359", duration: "0:22" },
+      { title: "PKV Beitrag", sub: "warum dein Einkommen völlig egal ist", views: "347", duration: "0:57" },
+      { title: "Beihilfe für was?", sub: "Du hast post vom Arzt? Das musst du machen!", views: "810", duration: "0:55" },
+      { title: "Hand aufs Herz", sub: "Weißt du welche PKV zu deinen bedürfnissen passt?", views: "361", duration: "0:41" },
+    ];
+
+    const faqs = [
+      { q: "Was kostet ein Erstgespräch?",
+        a: "Nichts. Das Erstgespräch ist komplett kostenlos und unverbindlich – egal ob Video, Telefon. Wir leben davon, dass aus guten Gesprächen gute Mandate werden." },
+      { q: "Seid nicht auf Provision aus?",
+        a: "Nein. Wir sind freie Makler und nicht an bestimmte Versicherer gebunden. Das heißt: Wir vergleichen für dich die Angebote aller relevanten Anbieter am Markt und empfehlen das, was zu dir passt – nicht das, was uns die höchste Provision bringt." },
+      { q: "Ich bin noch Anwärter – lohnt sich das überhaupt?",
+        a: "Gerade als Anwärter lohnt sich eine frühe Beratung. Stichwort: Anwartschaft. Damit sicherst du dir günstige Beiträge und Gesundheitsfragen für die Verbeamtung auf Lebenszeit – das spart später oft fünfstellige Beträge." },
+      { q: "Wie läuft ein Termin ab?",
+        a: "Du wählst online einen Slot bei deinem Wunsch­berater (Video), bekommst eine Bestätigung per Mail und einen kurzen Fragebogen. Im Termin analysieren wir deine Situation und zeigen konkrete Handlungs­empfehlungen – ohne Verkaufsdruck." },
+      { q: "Für welche Bundesländer seid ihr zuständig?",
+        a: "Bundesweit. Wir betreuen Beamte in allen 16 Bundesländern und kennen die jeweiligen Beihilferegelungen im Detail. Termine finden überwiegend digital statt – vor Ort sind wir in Gersthofen bei Augsburg." },
+    ];
+
+    const marqueeWords = ["Beihilfe","Dienstunfähigkeit","Altersvorsorge","Diensthaftpflicht","Anwärter","Referendare","Pflegezusatz","Berufsunfähigkeit","Ruhegehalt","Krankentagegeld"];
+
+    // ===== HELPERS =====
+    const el = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; };
+
+    // ===== BUILD MARQUEE =====
+    function buildMarquee() {
+      const html = marqueeWords.map(w => `
+        <span class="ticker-item">
+          <span class="font-display italic text-2xl md:text-3xl">${w}</span>
+          <span class="w-1.5 h-1.5 rounded-full" style="background: #51bdff;"></span>
+        </span>
+      `).join('');
+      document.getElementById('marquee-content').innerHTML = html;
+      document.getElementById('marquee-content-2').innerHTML = html;
+    }
+
+    // ===== BUILD BENEFITS =====
+    function buildBenefits() {
+      const grid = document.getElementById('benefits-grid');
+      benefits.forEach(b => {
+        const points = b.points.map(p => `
+          <div class="flex items-center gap-3 text-sm text-[#030039]/75">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#2200c8" stroke-width="2.5"><path d="M5 12l4 4L19 6"/></svg>
+            <span>${p}</span>
+          </div>`).join('');
+
+        grid.appendChild(el(`
+          <div class="card-hover bg-white p-8 md:p-10 rounded-3xl border border-[#030039]/5 relative overflow-hidden group">
+            <div class="absolute -top-4 -right-4 font-display text-[120px] leading-none text-[#030039]/[0.04] select-none pointer-events-none">${b.num}</div>
+            <div class="relative">
+              <div class="flex items-start justify-between mb-6">
+                <div>
+                  <div class="text-xs tracking-widest text-[#2200c8] font-semibold mb-1">${b.num}</div>
+                  <h3 class="font-display text-3xl md:text-4xl tracking-tight text-[#030039]">${b.title}</h3>
+                  <div class="text-sm text-[#030039]/60 italic mt-1 font-display">${b.short}</div>
+                </div>
+                <svg class="w-5 h-5 text-[#030039]/30 group-hover:text-[#2200c8] group-hover:rotate-45 transition-all duration-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+              </div>
+              <p class="text-[#030039]/80 font-light leading-relaxed mb-6">${b.text}</p>
+              <div class="pt-5 border-t border-[#030039]/10 space-y-2">${points}</div>
             </div>
-        </div>
-    </nav>
+          </div>
+        `));
+      });
+    }
 
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-aventus-navy text-white">
-        <!-- Abstract Background Elements -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-            <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-aventus-blue rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
-            <div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-aventus-teal rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-        </div>
+    // ===== BUILD ADVISORS =====
+    function buildAdvisorTabs() {
+      const tabs = document.getElementById('advisor-tabs');
+      advisors.forEach((a, i) => {
+        const btn = el(`<button class="tab-btn px-5 py-2.5 rounded-full text-sm" data-idx="${i}">${a.firstName} ${a.name.split(" ")[1][0]}.</button>`);
+        btn.addEventListener('click', () => setActiveAdvisor(i));
+        tabs.appendChild(btn);
+      });
+    }
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center lg:text-left flex flex-col lg:flex-row items-center gap-12">
-            <div class="lg:w-1/2">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm mb-6">
-                    <span class="flex h-3 w-3 relative">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-aventus-coral opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-aventus-coral"></span>
-                    </span>
-                    <span class="text-sm font-semibold tracking-wide text-aventus-sky">Speziell für Beamtenanwärter & Referendare</span>
+    function buildAdvisorPanels() {
+      const container = document.getElementById('advisor-panels');
+      advisors.forEach((a, i) => {
+        const expertise = a.expertise.map(e => `<span class="px-3.5 py-1.5 rounded-full border border-[#030039]/15 text-sm text-[#030039]/85 bg-[#fafaf7]">${e}</span>`).join('');
+
+        container.appendChild(el(`
+          <div class="advisor-panel" data-idx="${i}">
+            <div class="grid md:grid-cols-12">
+              <div class="md:col-span-5 relative overflow-hidden min-h-[400px] md:min-h-[640px]" style="background: linear-gradient(135deg, ${a.color} 0%, #030039 100%);">
+                <div class="absolute inset-0 pointer-events-none">
+                  <div class="absolute top-10 left-10 w-32 h-32 rounded-full bg-white/15 blur-2xl"></div>
+                  <div class="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-white/10 blur-3xl"></div>
+                  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full opacity-20" style="background: radial-gradient(circle, ${a.accent} 0%, transparent 70%);"></div>
                 </div>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
-                    Dein Start in den Beamtenstatus – <span class="text-transparent bg-clip-text bg-gradient-to-r from-aventus-sky to-aventus-teal">ohne Fragezeichen.</span>
-                </h1>
-                <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0">
-                    Beihilfe, PKV, Dienstunfähigkeit? Wir übersetzen das Beamtendeutsch und finden die Absicherung, die wirklich zu dir passt. 100% unabhängig, 100% digital.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <!-- ✏️ HIER ÄNDERN: Buchungslink für den großen Button ganz oben -->
-                    <a href="https://outlook.office.com/book/Beamtenhelden@aventusgruppe.de/" target="_blank" class="bg-aventus-coral text-white px-8 py-4 rounded-full font-bold text-lg shadow-[0_0_20px_rgba(252,91,71,0.4)] hover:shadow-[0_0_30px_rgba(252,91,71,0.6)] hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
-                        Kostenloses Erstgespräch <i class="ph-bold ph-arrow-right"></i>
-                    </a>
-                    <!-- ✏️ HIER ÄNDERN: Link zu eurem Instagram-Profil -->
-                    <a href="https://www.instagram.com/beamtenhelden/" target="_blank" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-4 rounded-full font-bold text-lg backdrop-blur-sm transition-all flex items-center justify-center gap-2">
-                        <i class="ph-fill ph-play-circle text-2xl"></i> Lerne uns kennen
-                    </a>
+
+                <div class="absolute top-6 left-6 flex items-center gap-2 text-white text-xs tracking-[0.2em] uppercase z-10">
+                  <span class="pulse-dot w-1.5 h-1.5 rounded-full" style="background: #00bd9e;"></span>
+                  Online
                 </div>
-                
-                <!-- Trust Indicators -->
-                <div class="mt-10 flex items-center justify-center lg:justify-start gap-4 text-sm font-semibold text-gray-400">
-                    <div class="flex -space-x-2">
-                        <img class="w-8 h-8 rounded-full border-2 border-aventus-navy" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Kunde">
-                        <img class="w-8 h-8 rounded-full border-2 border-aventus-navy" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Kunde">
-                        <img class="w-8 h-8 rounded-full border-2 border-aventus-navy" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="Kunde">
-                    </div>
+                <div class="absolute top-6 right-6 font-display italic text-white/80 text-sm z-10">
+                  ${String(i + 1).padStart(2, "0")} / ${String(advisors.length).padStart(2, "0")}
+                </div>
+
+                <div class="absolute inset-0 flex items-center justify-center p-10">
+                  <div class="relative w-full max-w-[340px] aspect-square">
+                    <div class="absolute inset-0 rounded-full border border-white/20" style="transform: scale(1.08);"></div>
+                    <div class="absolute inset-0 rounded-full border border-white/10" style="transform: scale(1.15);"></div>
+                    <img src="${a.photo}" alt="${a.name}" class="relative w-full h-full rounded-full object-cover shadow-[0_20px_60px_-10px_rgba(0,0,0,0.5)]" />
+                  </div>
+                </div>
+
+                <div class="absolute bottom-6 left-6 right-6 flex items-end justify-between z-10">
+                  <div>
+                    <div class="text-[10px] tracking-[0.3em] uppercase text-white/70 mb-1">Persönliche Beratung</div>
+                    <div class="font-display text-white text-lg">per Video</div>
+                  </div>
+                  <div class="flex items-center gap-1.5 text-white/80 text-xs">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                    MS Bookings
+                  </div>
+                </div>
+              </div>
+
+              <div class="md:col-span-7 p-8 md:p-12 flex flex-col">
+                <div class="flex items-center gap-2 mb-3 text-xs">
+                  <span class="pulse-dot w-2 h-2 rounded-full bg-[#00bd9e]"></span>
+                  <span class="text-[#030039]/70">Nimmt aktuell neue Mandate an</span>
+                </div>
+                <div class="text-sm text-[#030039]/60 tracking-wider uppercase mb-1">${a.role}</div>
+                <h3 class="font-display text-4xl md:text-5xl tracking-tight text-[#030039] mb-3">${a.name}</h3>
+                <p class="font-display italic text-lg text-[#2200c8] font-medium mb-6">${a.specialty}</p>
+                <p class="font-light text-[#030039]/85 mb-8 leading-relaxed max-w-xl">${a.bio}</p>
+
+                <div class="mb-8">
+                  <div class="text-xs tracking-[0.25em] uppercase text-[#030039]/60 mb-3">Schwerpunkte</div>
+                  <div class="flex flex-wrap gap-2">${expertise}</div>
+                </div>
+
+                <div class="mt-auto pt-6 border-t border-[#030039]/10">
+                  <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 justify-between">
                     <div>
-                        <div class="flex text-yellow-400 text-xs">
-                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
-                        </div>
-                        <span>Über 500 glückliche Beamte</span>
+                      <div class="text-xs tracking-[0.25em] uppercase text-[#030039]/60 mb-1.5">→ Direkt buchen</div>
+                      <div class="font-display text-xl text-[#030039]">30 Min · kostenlos · Video</div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Hero Image / Visual -->
-            <div class="lg:w-1/2 relative hidden md:block">
-                <div class="relative w-full max-w-lg mx-auto aspect-square rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Team Meeting" class="object-cover w-full h-full opacity-80">
-                    <div class="absolute inset-0 bg-gradient-to-t from-aventus-navy via-transparent to-transparent"></div>
-                    
-                    <!-- Floating Badge -->
-                    <div class="absolute bottom-8 left-8 bg-white text-aventus-navy p-4 rounded-2xl shadow-xl flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
-                        <div class="bg-aventus-teal/20 text-aventus-teal p-3 rounded-full">
-                            <i class="ph-fill ph-shield-check text-2xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500 font-bold uppercase">Status</p>
-                            <p class="font-black text-lg">Optimal abgesichert</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Media Reels Section -->
-    <section id="social" class="py-20 bg-aventus-light overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-end mb-10">
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-black text-aventus-navy mb-4">Tipps & Insights <span class="text-aventus-coral">To Go</span></h2>
-                    <p class="text-lg text-gray-600 max-w-xl">Folge uns auf Social Media für tägliche Hacks rund um Beihilfe, PKV und den Beamtenalltag. Swipe dich durch unsere neuesten Reels.</p>
-                </div>
-                <!-- Desktop Navigation Buttons -->
-                <div class="hidden md:flex gap-3">
-                    <button id="scroll-left" class="w-12 h-12 rounded-full border-2 border-aventus-navy flex items-center justify-center text-aventus-navy hover:bg-aventus-navy hover:text-white transition-colors">
-                        <i class="ph-bold ph-arrow-left"></i>
-                    </button>
-                    <button id="scroll-right" class="w-12 h-12 rounded-full border-2 border-aventus-navy flex items-center justify-center text-aventus-navy hover:bg-aventus-navy hover:text-white transition-colors">
-                        <i class="ph-bold ph-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Carousel Container -->
-        <div class="pl-4 sm:pl-6 lg:pl-8 ml-auto max-w-[1400px]">
-            <div id="reel-container" class="flex gap-4 sm:gap-6 overflow-x-auto hide-scrollbar snap-x-mandatory pb-8 pt-4">
-                
-                <!-- Reel 1 -->
-                <!-- ✏️ HIER ÄNDERN: Link direkt zum Instagram/TikTok Post (href="...") -->
-                <a href="https://www.instagram.com/reel/DXOayWwM0Cy/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="snap-center-item shrink-0 w-[260px] h-[460px] rounded-3xl overflow-hidden relative shadow-lg group cursor-pointer border border-aventus-grey block">
-                    <!-- ✏️ HIER ÄNDERN: Titelbild des Reels. Lade ein Bild hoch und trage hier z.B. src="reel1.jpg" ein -->
-                    <img src="https://images.unsplash.com/photo-1616469829581-73993eb86b02?auto=format&fit=crop&w=400&q=80" alt="Reel Thumbnail" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 reel-overlay flex flex-col justify-end p-5">
-                        <div class="bg-white/20 backdrop-blur-md w-12 h-12 rounded-full flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
-                            <i class="ph-fill ph-play text-white text-2xl"></i>
-                        </div>
-                        <div class="flex items-center gap-2 mb-2 text-white">
-                            <i class="ph-fill ph-instagram-logo text-xl"></i>
-                            <span class="text-xs font-bold bg-aventus-coral px-2 py-1 rounded-full">Neu</span>
-                        </div>
-                        <!-- ✏️ HIER ÄNDERN: Text, der auf dem Reel steht -->
-                        <p class="text-white font-bold leading-tight line-clamp-2">Was kann die kleine Anwartschaft</p>
-                    </div>
-                </a>
-
-                <!-- Reel 2 -->
-                <a href="https://www.instagram.com/reel/DXY99ADCIEG/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==." target="_blank" class="snap-center-item shrink-0 w-[260px] h-[460px] rounded-3xl overflow-hidden relative shadow-lg group cursor-pointer border border-aventus-grey block">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" alt="Reel Thumbnail" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 reel-overlay flex flex-col justify-end p-5">
-                        <div class="bg-white/20 backdrop-blur-md w-12 h-12 rounded-full flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
-                            <i class="ph-fill ph-play text-white text-2xl"></i>
-                        </div>
-                        <div class="flex items-center gap-2 mb-2 text-white">
-                            <i class="ph-fill ph-tiktok-logo text-xl"></i>
-                        </div>
-                        <p class="text-white font-bold leading-tight line-clamp-2">Diese 3 Dinge übersehen die meisten</p>
-                    </div>
-                </div>
-
-                <!-- Reel 3 -->
-                <div class="snap-center-item shrink-0 w-[260px] h-[460px] rounded-3xl overflow-hidden relative shadow-lg group cursor-pointer border border-aventus-grey">
-                    <img src="https://www.instagram.com/reel/DWliuS5iDVu/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" alt="Reel Thumbnail" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 reel-overlay flex flex-col justify-end p-5">
-                        <div class="bg-white/20 backdrop-blur-md w-12 h-12 rounded-full flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
-                            <i class="ph-fill ph-play text-white text-2xl"></i>
-                        </div>
-                        <div class="flex items-center gap-2 mb-2 text-white">
-                            <i class="ph-fill ph-instagram-logo text-xl"></i>
-                        </div>
-                        <p class="text-white font-bold leading-tight line-clamp-2">Beihilfe für was?</p>
-                    </div>
-                </div>
-
-                <!-- Reel 4 -->
-                <div class="snap-center-item shrink-0 w-[260px] h-[460px] rounded-3xl overflow-hidden relative shadow-lg group cursor-pointer border border-aventus-grey">
-                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=400&q=80" alt="Reel Thumbnail" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 reel-overlay flex flex-col justify-end p-5">
-                        <div class="bg-white/20 backdrop-blur-md w-12 h-12 rounded-full flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all">
-                            <i class="ph-fill ph-play text-white text-2xl"></i>
-                        </div>
-                        <div class="flex items-center gap-2 mb-2 text-white">
-                            <i class="ph-fill ph-tiktok-logo text-xl"></i>
-                        </div>
-                        <p class="text-white font-bold leading-tight line-clamp-2">Q&A: Lehramtsreferendariat & Versicherungen 🎓</p>
-                    </div>
-                </div>
-                
-                 <!-- Spacer for right margin on scroll -->
-                 <div class="shrink-0 w-4 sm:w-8"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Advisors / Termin buchen Section -->
-    <section id="berater" class="py-24 bg-white relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-5xl font-black text-aventus-navy mb-6">Deine Experten für den <span class="text-aventus-blue">Beamtenstatus</span></h2>
-                <p class="text-xl text-gray-600">Keine Hotlines, keine Warteschleifen. Wähle deinen persönlichen Experten und buche direkt deinen Wunschtermin online.</p>
-            </div>
-
-            <!-- Advisor Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Advisor 1 -->
-                <div class="bg-white border border-aventus-grey rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow flex flex-col items-center text-center group">
-                    <div class="relative w-40 h-40 mb-6">
-                        <!-- Background Blob -->
-                        <div class="absolute inset-0 bg-aventus-blue rounded-full opacity-10 scale-110 group-hover:scale-125 transition-transform duration-500"></div>
-                        <!-- ✏️ HIER ÄNDERN: Profilbild des Beraters (z.B. src="Felix.jpg") -->
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=256&q=80" alt="Felix Weber" class="relative z-10 w-full h-full object-cover rounded-full border-4 border-white shadow-md">
-                    </div>
-                    <!-- ✏️ HIER ÄNDERN: Berater Details -->
-                    <h3 class="text-2xl font-black text-aventus-navy mb-1">Felix Weber</h3>
-                    <p class="text-aventus-teal font-semibold mb-4">Spezialist für Lehramt & Polizei</p>
-                    <p class="text-gray-500 text-sm mb-8 flex-grow">"Ich kenne die Hürden des Referendariats aus eigener Erfahrung. Lass uns deinen Papierkram erledigen."</p>
-                    
-                    <!-- ✏️ HIER ÄNDERN: Persönlicher Kalender-Link für diesen speziellen Berater -->
-                    <a href="https://calendly.com/felix-weber" target="_blank" class="w-full bg-aventus-navy hover:bg-aventus-blue text-white font-bold py-4 rounded-xl transition-colors flex justify-center items-center gap-2 group-hover:bg-aventus-coral">
-                        <i class="ph-bold ph-calendar-plus text-xl"></i>
-                        Termin bei Felix buchen
+                    <a href="${a.bookingUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#030039] text-white rounded-full font-medium text-sm shrink-0 hover:text-white">
+                      <svg class="relative z-10 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                      <span class="relative z-10">Slot bei ${a.firstName}</span>
+                      <svg class="relative z-10 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
                     </a>
+                  </div>
+                  <div class="mt-4 text-xs text-[#030039]/60 flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg>
+                    Du wirst zu Microsoft Bookings weitergeleitet · DSGVO-konform
+                  </div>
                 </div>
-
-                <!-- Advisor 2 -->
-                <div class="bg-white border border-aventus-grey rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow flex flex-col items-center text-center group">
-                    <div class="relative w-40 h-40 mb-6">
-                        <div class="absolute inset-0 bg-aventus-coral rounded-full opacity-10 scale-110 group-hover:scale-125 transition-transform duration-500"></div>
-                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=256&q=80" alt="Sarah Schmidt" class="relative z-10 w-full h-full object-cover rounded-full border-4 border-white shadow-md">
-                    </div>
-                    <h3 class="text-2xl font-black text-aventus-navy mb-1">Sarah Schmidt</h3>
-                    <p class="text-aventus-teal font-semibold mb-4">Expertin für Justiz & Verwaltung</p>
-                    <p class="text-gray-500 text-sm mb-8 flex-grow">"Die richtige Dienstunfähigkeits-Klausel ist das A und O. Ich zeige dir transparent, worauf es ankommt."</p>
-                    
-                    <button class="w-full bg-aventus-navy hover:bg-aventus-blue text-white font-bold py-4 rounded-xl transition-colors flex justify-center items-center gap-2 group-hover:bg-aventus-coral">
-                        <i class="ph-bold ph-calendar-plus text-xl"></i>
-                        Termin bei Sarah buchen
-                    </button>
-                </div>
-
-                <!-- Advisor 3 -->
-                <div class="bg-white border border-aventus-grey rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow flex flex-col items-center text-center group">
-                    <div class="relative w-40 h-40 mb-6">
-                        <div class="absolute inset-0 bg-aventus-sky rounded-full opacity-10 scale-110 group-hover:scale-125 transition-transform duration-500"></div>
-                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=256&q=80" alt="Lukas Meyer" class="relative z-10 w-full h-full object-cover rounded-full border-4 border-white shadow-md">
-                    </div>
-                    <h3 class="text-2xl font-black text-aventus-navy mb-1">Lukas Meyer</h3>
-                    <p class="text-aventus-teal font-semibold mb-4">Beihilfe & PKV Experte</p>
-                    <p class="text-gray-500 text-sm mb-8 flex-grow">"GKV oder PKV? Wir rechnen beide Szenarien ehrlich für dich durch, damit du die richtige Wahl triffst."</p>
-                    
-                    <button class="w-full bg-aventus-navy hover:bg-aventus-blue text-white font-bold py-4 rounded-xl transition-colors flex justify-center items-center gap-2 group-hover:bg-aventus-coral">
-                        <i class="ph-bold ph-calendar-plus text-xl"></i>
-                        Termin bei Lukas buchen
-                    </button>
-                </div>
-
+              </div>
             </div>
-        </div>
-    </section>
+          </div>
+        `));
+      });
+    }
 
-    <!-- Trust / Info Banner -->
-    <section class="bg-aventus-blue text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/20">
-                <div class="p-4">
-                    <i class="ph-fill ph-check-circle text-4xl text-aventus-sky mb-3"></i>
-                    <h4 class="text-xl font-bold mb-2">100% Unabhängig</h4>
-                    <p class="text-white/80 text-sm">Wir vergleichen alle Gesellschaften am Markt für dich.</p>
-                </div>
-                <div class="p-4 pt-8 md:pt-4">
-                    <i class="ph-fill ph-laptop text-4xl text-aventus-sky mb-3"></i>
-                    <h4 class="text-xl font-bold mb-2">Komplett Digital</h4>
-                    <p class="text-white/80 text-sm">Beratung via Video-Call. Dokumente bequem per App.</p>
-                </div>
-                <div class="p-4 pt-8 md:pt-4">
-                    <i class="ph-fill ph-handshake text-4xl text-aventus-sky mb-3"></i>
-                    <h4 class="text-xl font-bold mb-2">Kostenfrei für dich</h4>
-                    <p class="text-white/80 text-sm">Unsere Beratung wird durch die Gesellschaften honoriert.</p>
-                </div>
+    function buildMiniCards() {
+      const container = document.getElementById('advisor-mini-cards');
+      advisors.forEach((a, i) => {
+        const btn = el(`
+          <button class="mini-card p-5 rounded-2xl" data-idx="${i}">
+            <div class="flex items-center gap-4">
+              <img src="${a.photo}" alt="${a.name}" class="w-14 h-14 rounded-full object-cover shrink-0 border-2" style="border-color: ${a.color};" />
+              <div class="min-w-0">
+                <div class="font-display text-lg text-white truncate">${a.name}</div>
+                <div class="text-xs text-white/70 truncate">${a.role}</div>
+              </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-aventus-navy text-white pt-16 pb-8 border-t-[10px] border-aventus-coral">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                
-                <div class="col-span-1 md:col-span-2">
-                    <div class="text-2xl font-black tracking-tight flex items-center gap-2 mb-6">
-                        <div class="w-8 h-8 bg-aventus-blue rounded-md flex items-center justify-center">
-                            <span class="text-white text-lg leading-none">A</span>
-                        </div>
-                        AVENTUS <span class="text-aventus-sky font-light">| Beamtenhelden</span>
-                    </div>
-                    <p class="text-gray-400 text-sm max-w-sm mb-6">
-                        Spezialisierte und unabhängige Versicherungsberatung für Beamte, Anwärter und Referendare in ganz Deutschland.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-aventus-coral transition-colors">
-                            <i class="ph-fill ph-instagram-logo text-xl"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-aventus-coral transition-colors">
-                            <i class="ph-fill ph-tiktok-logo text-xl"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-aventus-coral transition-colors">
-                            <i class="ph-fill ph-linkedin-logo text-xl"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div>
-                    <h5 class="text-lg font-bold mb-6 text-white">Rechtliches</h5>
-                    <ul class="space-y-3 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-aventus-sky transition-colors">Impressum</a></li>
-                        <li><a href="#" class="hover:text-aventus-sky transition-colors">Datenschutz</a></li>
-                        <li><a href="#" class="hover:text-aventus-sky transition-colors">Erstinformation</a></li>
-                        <li><a href="#" class="hover:text-aventus-sky transition-colors">AGB</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h5 class="text-lg font-bold mb-6 text-white">Kontakt</h5>
-                    <ul class="space-y-3 text-sm text-gray-400">
-                        <li class="flex items-center gap-2"><i class="ph ph-envelope-simple"></i> hallo@aventus.de</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-phone"></i> +49 123 456 789</li>
-                        <li class="flex items-center gap-2"><i class="ph ph-map-pin"></i> Musterstraße 1, 12345 Stadt</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-white/10 pt-8 text-center text-xs text-gray-500">
-                &copy; 2026 Aventus GmbH – Beamtenhelden. Alle Rechte vorbehalten.
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script>
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-
+          </button>
+        `);
         btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+          setActiveAdvisor(i);
+          document.getElementById('berater').scrollIntoView({ behavior: 'smooth' });
         });
+        container.appendChild(btn);
+      });
+    }
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.add('hidden');
-            });
+    function setActiveAdvisor(idx) {
+      document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+      document.querySelectorAll('.advisor-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+      document.querySelectorAll('.mini-card').forEach((c, i) => c.classList.toggle('active', i === idx));
+    }
+
+    // ===== BUILD REELS =====
+    function buildReels() {
+      const container = document.getElementById('reels-scroll');
+      const colors = ["#2200c8", "#030039", "#51bdff", "#00bd9e", "#fc5b47", "#2200c8"];
+      reels.forEach((r, i) => {
+        const bg = colors[i % colors.length];
+        container.appendChild(el(`
+          <a href="https://instagram.com/beamtenhelden" target="_blank" rel="noopener noreferrer"
+             class="reel-card shrink-0 snap-start w-[240px] md:w-[280px] aspect-[9/16] rounded-3xl overflow-hidden relative cursor-pointer group"
+             style="background: linear-gradient(180deg, ${bg} 0%, #030039 100%);">
+            <div class="absolute inset-0 flex flex-col justify-between p-5">
+              <div class="flex items-center justify-between text-white">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full bg-white/25 backdrop-blur flex items-center justify-center text-[9px] font-bold">BH</div>
+                  <span class="text-xs font-medium">beamtenhelden</span>
+                </div>
+                <span class="text-[10px] opacity-90 bg-black/25 px-2 py-0.5 rounded-full backdrop-blur">${r.duration}</span>
+              </div>
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 group-hover:bg-white/30 transition-all duration-500">
+                  <svg class="w-4 h-4 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="text-white">
+                <div class="font-display text-xl md:text-2xl leading-tight mb-1.5 pr-4">${r.title}</div>
+                <div class="text-xs opacity-80 mb-3 font-light">${r.sub}</div>
+                <div class="flex items-center gap-3 text-xs opacity-90">
+                  <span class="flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    ${r.views}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 0%, transparent 40%);"></div>
+          </a>
+        `));
+      });
+    }
+
+    // ===== BUILD FAQ =====
+    function buildFaq() {
+      const container = document.getElementById('faq-list');
+      faqs.forEach((f, i) => {
+        const item = el(`
+          <div class="faq-item border-b border-[#030039]/10 last:border-b-0" data-open="${i === 0 ? 'true' : 'false'}">
+            <button class="faq-toggle w-full py-5 flex items-center justify-between gap-6 text-left group">
+              <span class="font-display text-lg md:text-xl text-[#030039] group-hover:text-[#2200c8] transition">${f.q}</span>
+              <div class="faq-icon-wrap w-8 h-8 rounded-full border border-[#030039]/20 flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5 text-[#030039]/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p class="text-[#030039]/80 font-light leading-relaxed pr-12 max-w-2xl">${f.a}</p>
+            </div>
+          </div>
+        `);
+        item.querySelector('.faq-toggle').addEventListener('click', () => {
+          const isOpen = item.getAttribute('data-open') === 'true';
+          item.setAttribute('data-open', isOpen ? 'false' : 'true');
         });
+        container.appendChild(item);
+      });
+    }
 
-        // Social Media Carousel Scroll Logic
-        const reelContainer = document.getElementById('reel-container');
-        const scrollLeftBtn = document.getElementById('scroll-left');
-        const scrollRightBtn = document.getElementById('scroll-right');
-
-        if (scrollLeftBtn && scrollRightBtn && reelContainer) {
-            // Scroll amount (Width of one reel + gap)
-            const scrollAmount = 280; 
-
-            scrollLeftBtn.addEventListener('click', () => {
-                reelContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            });
-
-            scrollRightBtn.addEventListener('click', () => {
-                reelContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            });
+    // ===== INTERACTIONS =====
+    function initNav() {
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          nav.classList.remove('bg-transparent', 'py-5');
+          nav.classList.add('py-3', 'border-b', 'border-[#030039]/5');
+          nav.style.background = 'rgba(250, 250, 247, 0.9)';
+          nav.style.backdropFilter = 'blur(20px)';
+        } else {
+          nav.classList.remove('py-3', 'border-b', 'border-[#030039]/5');
+          nav.classList.add('bg-transparent', 'py-5');
+          nav.style.background = '';
+          nav.style.backdropFilter = '';
         }
-    </script>
+      });
+
+      const toggle = document.getElementById('menu-toggle');
+      const menu = document.getElementById('mobile-menu');
+      toggle.addEventListener('click', () => {
+        menu.classList.toggle('open');
+        const bars = toggle.querySelectorAll('.menu-bar');
+        if (menu.classList.contains('open')) {
+          bars[0].style.transform = 'rotate(45deg) translateY(3px)';
+          bars[1].style.transform = 'rotate(-45deg) translateY(-3px)';
+        } else {
+          bars[0].style.transform = '';
+          bars[1].style.transform = '';
+        }
+      });
+      menu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          menu.classList.remove('open');
+          const bars = toggle.querySelectorAll('.menu-bar');
+          bars[0].style.transform = '';
+          bars[1].style.transform = '';
+        });
+      });
+    }
+
+    function initHeroParallax() {
+      const hero = document.getElementById('hero');
+      const shapes = hero.querySelectorAll('.shape');
+      window.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+        const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+        shapes.forEach(s => {
+          const mx = parseFloat(s.dataset.mx) || 0;
+          const my = parseFloat(s.dataset.my) || 0;
+          const rotate = parseFloat(s.dataset.rotate) || 0;
+          const rotStr = rotate ? `rotate(${rotate}deg) ` : '';
+          s.style.transform = `${rotStr}translate(${x * mx}px, ${y * my}px)`;
+        });
+      });
+    }
+
+    // ===== INIT =====
+    buildMarquee();
+    buildBenefits();
+    buildAdvisorTabs();
+    buildAdvisorPanels();
+    buildMiniCards();
+    buildReels();
+    buildFaq();
+    setActiveAdvisor(0);
+    initNav();
+    initHeroParallax();
+  </script>
 </body>
 </html>
