@@ -765,29 +765,29 @@
     }
 
    // ===== BUILD REELS (Optimiert) =====
-    function buildReels() {
+function buildReels() {
       const container = document.getElementById('reels-scroll');
       if (!container) return;
 
       const colors = ["#2200c8", "#030039", "#51bdff", "#00bd9e", "#fc5b47"];
       
-      // Wir generieren den kompletten HTML-String auf einmal (effizienter für den Browser)
       container.innerHTML = reels.map((r, i) => {
         const bg = colors[i % colors.length];
         
         return `
           <a href="${r.link}" target="_blank" rel="noopener noreferrer"
-             class="reel-card shrink-0 snap-start w-[240px] md:w-[280px] aspect-[9/16] rounded-3xl overflow-hidden relative cursor-pointer group shadow-xl">
+             class="reel-card shrink-0 snap-start w-[240px] md:w-[280px] aspect-[9/16] rounded-3xl overflow-hidden relative cursor-pointer group shadow-xl bg-black">
             
             <div class="absolute inset-0 z-0">
               <img src="${r.thumbnail}" alt="${r.title}" 
-                   class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                   onerror="this.style.display='none'"> <div class="absolute inset-0 opacity-70 transition-opacity group-hover:opacity-60" 
-                   style="background: linear-gradient(180deg, ${bg} 0%, #030039 100%); mix-blend-mode: multiply;">
+                   class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-100">
+              
+              <div class="absolute inset-0 z-10" 
+                   style="background: linear-gradient(to top, rgba(3,0,57,0.9) 0%, rgba(3,0,57,0.4) 40%, transparent 100%);">
               </div>
             </div>
 
-            <div class="absolute inset-0 flex flex-col justify-between p-5 z-10 text-white">
+            <div class="absolute inset-0 flex flex-col justify-between p-5 z-20 text-white">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                   <div class="w-7 h-7 rounded-full bg-white/25 backdrop-blur flex items-center justify-center text-[9px] font-bold border border-white/20">BH</div>
@@ -813,8 +813,6 @@
                 </div>
               </div>
             </div>
-            
-            <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.4) 0%, transparent 50%);"></div>
           </a>
         `;
       }).join('');
