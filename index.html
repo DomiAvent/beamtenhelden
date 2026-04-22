@@ -531,13 +531,55 @@
         points: ["Schlüsselverlust­deckung", "Regress­ansprüche", "Forderungs­ausfall"] },
     ];
 
-    const reels = [
-      { title: "3 Dinge, die dir dein Dienstherr NIE erklärt", sub: "Die meisten Beamten machen diese Fehler", views: "447", duration: "0:58" },
-      { title: "Gesundheitszustand einfrieren?", sub: "Warum die kleine Anwartschaft für angehende Lehrer ein muss ist", views: "397", duration: "0:56" },
-      { title: "Referendariat in sicht?", sub: "Jetzt gehts an die PKV Wahl, aber wo anfangen?", views: "359", duration: "0:22" },
-      { title: "PKV Beitrag", sub: "warum dein Einkommen völlig egal ist", views: "347", duration: "0:57" },
-      { title: "Beihilfe für was?", sub: "Du hast post vom Arzt? Das musst du machen!", views: "810", duration: "0:55" },
-      { title: "Hand aufs Herz", sub: "Weißt du welche PKV zu deinen bedürfnissen passt?", views: "361", duration: "0:41" },
+const reels = [
+      { 
+        title: "3 Dinge, die dir dein Dienstherr NIE erklärt", 
+        sub: "Die meisten Beamten machen diese Fehler", 
+        views: "447", 
+        duration: "0:58",
+        link: "https://www.instagram.com/reel/DXY99ADCIEG/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==", // Dein Reel-Link
+        thumbnail: "Final.jpg"   // Dein Titelbild
+      },
+      { 
+        title: "Gesundheitszustand einfrieren?", 
+        sub: "Warum die kleine Anwartschaft ein Muss ist", 
+        views: "397", 
+        duration: "0:56",
+        link: "https://www.instagram.com/reel/DXOayWwM0Cy/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        thumbnail: "Was kann die kleine Anwartschaf.jpg"
+      },
+      { 
+        title: "Referendariat in Sicht?", 
+        sub: "Jetzt gehts an die PKV Wahl, aber wo anfangen?", 
+        views: "359", 
+        duration: "0:22",
+        link: "https://www.instagram.com/reel/DXEhL02iJ5K/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        thumbnail: "Ref.jpg"
+      },
+      { 
+        title: "PKV Beitrag", 
+        sub: "Warum dein Einkommen völlig egal ist", 
+        views: "347", 
+        duration: "0:57",
+        link: "https://www.instagram.com/reel/DW3Cs_MiHac/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        thumbnail: "PKV.jpg"
+      },
+      { 
+        title: "Beihilfe für was?", 
+        sub: "Du hast Post vom Arzt? Das musst du machen!", 
+        views: "810", 
+        duration: "0:55",
+        link: "https://www.instagram.com/reel/DWliuS5iDVu/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        thumbnail: "Beihilfe für was.jpg"
+      },
+      { 
+        title: "Hand aufs Herz", 
+        sub: "Weißt du welche PKV zu deinen Bedürfnissen passt?", 
+        views: "361", 
+        duration: "0:41",
+        link: "https://www.instagram.com/reel/DWTOFnkiFf3/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+        thumbnail: "Hand.jpg"
+      },
     ];
 
     const faqs = [
@@ -720,31 +762,46 @@
       document.querySelectorAll('.mini-card').forEach((c, i) => c.classList.toggle('active', i === idx));
     }
 
-    // ===== BUILD REELS =====
-    function buildReels() {
+      // ===== BUILD REELS (Optimiert) =====
+function buildReels() {
       const container = document.getElementById('reels-scroll');
-      const colors = ["#2200c8", "#030039", "#51bdff", "#00bd9e", "#fc5b47", "#2200c8"];
-      reels.forEach((r, i) => {
+      if (!container) return;
+
+      const colors = ["#2200c8", "#030039", "#51bdff", "#00bd9e", "#fc5b47"];
+      
+      container.innerHTML = reels.map((r, i) => {
         const bg = colors[i % colors.length];
-        container.appendChild(el(`
-          <a href="https://instagram.com/beamtenhelden" target="_blank" rel="noopener noreferrer"
-             class="reel-card shrink-0 snap-start w-[240px] md:w-[280px] aspect-[9/16] rounded-3xl overflow-hidden relative cursor-pointer group"
-             style="background: linear-gradient(180deg, ${bg} 0%, #030039 100%);">
-            <div class="absolute inset-0 flex flex-col justify-between p-5">
-              <div class="flex items-center justify-between text-white">
+        
+        return `
+          <a href="${r.link}" target="_blank" rel="noopener noreferrer"
+             class="reel-card shrink-0 snap-start w-[240px] md:w-[280px] aspect-[9/16] rounded-3xl overflow-hidden relative cursor-pointer group shadow-xl bg-black">
+            
+            <div class="absolute inset-0 z-0">
+              <img src="${r.thumbnail}" alt="${r.title}" 
+                   class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-100">
+              
+              <div class="absolute inset-0 z-10" 
+                   style="background: linear-gradient(to top, rgba(3,0,57,0.9) 0%, rgba(3,0,57,0.4) 40%, transparent 100%);">
+              </div>
+            </div>
+
+            <div class="absolute inset-0 flex flex-col justify-between p-5 z-20 text-white">
+              <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                  <div class="w-7 h-7 rounded-full bg-white/25 backdrop-blur flex items-center justify-center text-[9px] font-bold">BH</div>
+                  <div class="w-7 h-7 rounded-full bg-white/25 backdrop-blur flex items-center justify-center text-[9px] font-bold border border-white/20">BH</div>
                   <span class="text-xs font-medium">beamtenhelden</span>
                 </div>
-                <span class="text-[10px] opacity-90 bg-black/25 px-2 py-0.5 rounded-full backdrop-blur">${r.duration}</span>
+                <span class="text-[10px] opacity-90 bg-black/30 px-2 py-0.5 rounded-full backdrop-blur border border-white/10">${r.duration}</span>
               </div>
+
               <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 group-hover:bg-white/30 transition-all duration-500">
+                <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 group-hover:bg-white/30 transition-all duration-500 border border-white/30">
                   <svg class="w-4 h-4 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                 </div>
               </div>
-              <div class="text-white">
-                <div class="font-display text-xl md:text-2xl leading-tight mb-1.5 pr-4">${r.title}</div>
+
+              <div>
+                <div class="font-display text-xl md:text-2xl leading-tight mb-1.5 pr-4 drop-shadow-md">${r.title}</div>
                 <div class="text-xs opacity-80 mb-3 font-light">${r.sub}</div>
                 <div class="flex items-center gap-3 text-xs opacity-90">
                   <span class="flex items-center gap-1">
@@ -754,10 +811,9 @@
                 </div>
               </div>
             </div>
-            <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 0%, transparent 40%);"></div>
           </a>
-        `));
-      });
+        `;
+      }).join('');
     }
 
     // ===== BUILD FAQ =====
