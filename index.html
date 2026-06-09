@@ -162,6 +162,19 @@
     
     /* Animation für die Rechner-Schritte */
     .step-enter { animation: fadeUp 0.5s ease-out forwards; }
+
+    /* ===== TRACKING BADGE ===== */
+#bh-tracking-badge {
+  position: fixed; bottom: 20px; right: 20px; z-index: 9998;
+  background: #030039; color: white; border-radius: 100px;
+  padding: 8px 16px; font-size: 11px; font-family: 'Source Sans 3', sans-serif;
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(3,0,57,0.3); transition: all 0.3s ease;
+  opacity: 0; pointer-events: none;
+}
+#bh-tracking-badge.visible { opacity: 1; pointer-events: auto; }
+#bh-tracking-badge:hover { background: #2200c8; transform: translateY(-2px); }
+#bh-tracking-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #51bdff; animation: pulse-dot 2s ease-in-out infinite; }
   </style>
 </head>
 <body class="min-h-screen bg-[#fafaf7] text-[#030039] antialiased overflow-x-hidden">
@@ -1192,6 +1205,173 @@ window.renderStep4 = function() {
         </div>
     `;
 };
+    // ===================================================
+// BEAMTENHELDEN TRACKING — kein externes Tool nötig
+// Admin-Panel öffnen: Shift + Alt + T
+// ===================================================
+const BHT = {
+  key: 'bh_clicks',
+  log(data) {
+    const events = JSON.parse(localStorage.getItem(this.key) || '[]');
+    events.push({ ts: new Date().toISOString(), ...data });
+    localStorage.setItem(this.key, JSON.stringify(events));
+    bhUpdateBadge();
+  },
+  get() { return JSON.parse(localStorage.getItem(this.key) || '[]'); },
+  clear() { localStorage.removeItem(this.key); bhUpdateBadge(); },
+  csv() {
+    const events = this.get();
+    if (!events.length) return '';
+    const keys = [...new Set(events.flatMap(e => Object.keys(e)))];
+    return [keys.join(';'), ...events.map(e => keys.map(k => (e[k] || '').toString().replace(/;/g, ',')).join(';'))].join('\n');
+  }
+};
+
+function bhUpdateBadge() {
+  const badge = document.getElementById('bh-tracking-badge');
+  const count = BHT.get().filter(e => e.event === 'booking_click').length;
+  document.getElementById('bh-badge-count').textContent = count + (count === 1 ? ' Buchungsklick' : ' Buchungsklicks');
+  badge.classList.toggle('visible', count > 0);
+}
+
+function bhOpenAdmin() {
+  bhRefreshAdmin();
+  document.getElementById('bh-admin').style.display = 'block';
+}
+
+function initTracking() {
+  document.addEventListener('click', function(e) {
+    const bookingLink = e.target.closest('[data-track-booking]');
+    if (bookingLink) {
+      BHT.log({
+        event: 'booking_click',
+        advisor: bookingLink.dataset.trackBooking,
+        source: bookingLink.dataset.trackSource || 'unbekannt',
+      });
+    }
+    const ctaLink = e.target.closest('[data-track-cta]');
+    if (ctaLink) {
+      BHT.log({ event: 'cta_click', label: ctaLink.dataset.trackCta });
+    }
+    const reelLink = e.target.closest('[data-track-reel]');
+    if (reelLink) {
+      BHT.log({ event: 'reel_click', title: reelLink.dataset.trackReel });
+    }
+  });
+  bhUpdateBadge();
+}
+
+function initAdminPanel() {
+  const panel = document.createElement('div');
+  panel.id = 'bh-admin';
+  panel.style.cssText = [
+    'display:none', 'position:fixed', 'inset:0', 'z-index:9999',
+    'background:rgba(3,0,57,0.97)', 'color:white', 'overflow-y:auto',
+    "font-family:'Source Sans 3',sans-serif", 'padding:40px 24px',
+  ].join(';');
+
+  panel.innerHTML = `
+    <div style="max-width:960px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;opacity:.4;margin-bottom:6px;">Beamtenhelden · Internes Tracking</div>
+          <div style="font-size:2.4rem;font-weight:700;letter-spacing:-.03em;line-height:1;">Klick-Auswertung</div>
+          <div style="font-size:12px;opacity:.4;margin-top:6px;">Daten lokal im Browser · kein Server · kein Cookie</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button onclick="bhDownloadCSV()" style="background:rgba(81,189,255,.15);border:1px solid rgba(81,189,255,.3);color:#51bdff;padding:10px 20px;border-radius:100px;cursor:pointer;font-size:12px;font-family:inherit;font-weight:600;">CSV Export</button>
+          <button onclick="if(confirm('Alle Daten löschen?')){BHT.clear();bhRefreshAdmin();}" style="background:rgba(252,91,71,.15);border:1px solid rgba(252,91,71,.3);color:#fc5b47;padding:10px 20px;border-radius:100px;cursor:pointer;font-size:12px;font-family:inherit;font-weight:600;">Daten löschen</button>
+          <button onclick="document.getElementById('bh-admin').style.display='none'" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:white;padding:10px 20px;border-radius:100px;cursor:pointer;font-size:12px;font-family:inherit;">✕ Schließen</button>
+        </div>
+      </div>
+      <div id="bh-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:32px;"></div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;">
+        <div style="padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.08);font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.5;">Alle Events (neueste zuerst)</div>
+        <div id="bh-events" style="max-height:520px;overflow-y:auto;"></div>
+      </div>
+      <div style="margin-top:20px;padding:16px 24px;background:rgba(255,255,255,.04);border-radius:14px;font-size:11px;opacity:.4;line-height:1.6;">
+        <strong>Shortcut:</strong> Shift + Alt + T öffnet / schließt dieses Panel
+      </div>
+    </div>
+  `;
+  document.body.appendChild(panel);
+
+  window.bhRefreshAdmin = function() {
+    const events = BHT.get().slice().reverse();
+    const bookings = events.filter(e => e.event === 'booking_click');
+    const ctas     = events.filter(e => e.event === 'cta_click');
+    const reelClicks = events.filter(e => e.event === 'reel_click');
+    const rechner  = events.filter(e => e.event === 'rechner_complete');
+    const ac = {};
+    bookings.forEach(e => { ac[e.advisor] = (ac[e.advisor] || 0) + 1; });
+    const top = Object.entries(ac).sort((a, b) => b[1] - a[1])[0];
+
+    document.getElementById('bh-stats').innerHTML = [
+      { label: 'Buchungsklicks', val: bookings.length,   color: '#51bdff' },
+      { label: 'CTA-Klicks',     val: ctas.length,       color: '#00bd9e' },
+      { label: 'Reel-Klicks',    val: reelClicks.length, color: '#2200c8' },
+      { label: 'Rechner abgeschl.', val: rechner.length, color: '#fc5b47' },
+      { label: 'Top-Berater',    val: top ? top[0].split(' ')[0] + ' (' + top[1] + '×)' : '–', color: '#fff' },
+    ].map(s => `
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px 20px;">
+        <div style="font-size:9px;letter-spacing:.25em;text-transform:uppercase;opacity:.4;margin-bottom:8px;">${s.label}</div>
+        <div style="font-size:1.8rem;font-weight:700;color:${s.color};">${s.val}</div>
+      </div>
+    `).join('');
+
+    const evEl = document.getElementById('bh-events');
+    if (!events.length) {
+      evEl.innerHTML = '<div style="padding:48px;text-align:center;opacity:.3;font-size:14px;">Noch keine Klicks erfasst.</div>';
+      return;
+    }
+    const typeLabels = {
+      booking_click:     ['BUCHUNG', '#51bdff'],
+      cta_click:         ['CTA',     '#00bd9e'],
+      reel_click:        ['REEL',    '#2200c8'],
+      rechner_complete:  ['RECHNER', '#fc5b47'],
+    };
+    evEl.innerHTML = events.map(e => {
+      const d = new Date(e.ts);
+      const [label, color] = typeLabels[e.event] || ['EVENT', '#fff'];
+      const detail = e.advisor || e.label || e.title || (e.status ? e.status + ' · ' + (e.bl || '') : '');
+      return `
+        <div style="display:flex;align-items:center;gap:14px;padding:13px 24px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;flex-wrap:wrap;">
+          <span style="opacity:.35;font-size:11px;white-space:nowrap;min-width:120px;">${d.toLocaleDateString('de-DE')} ${d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})}</span>
+          <span style="padding:2px 10px;border-radius:100px;font-size:9px;font-weight:700;letter-spacing:.12em;background:${color}22;color:${color};white-space:nowrap;">${label}</span>
+          <span style="flex:1;min-width:120px;">${detail}</span>
+          <span style="opacity:.3;font-size:11px;">${e.source || ''}</span>
+        </div>
+      `;
+    }).join('');
+  };
+
+  window.bhDownloadCSV = function() {
+    const csv = BHT.csv();
+    if (!csv) { alert('Noch keine Daten vorhanden.'); return; }
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'beamtenhelden-tracking-' + new Date().toISOString().slice(0, 10) + '.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.shiftKey && e.altKey && e.key === 'T') {
+      const p = document.getElementById('bh-admin');
+      if (!p.style.display || p.style.display === 'none') { bhOpenAdmin(); }
+      else { p.style.display = 'none'; }
+    }
+  });
+}
+
+initTracking();
+initAdminPanel();
   </script>
+  <div id="bh-tracking-badge" onclick="bhOpenAdmin()">
+  <span class="dot"></span>
+  <span id="bh-badge-count">0 Klicks</span>
+</div>
 </body>
 </html>
