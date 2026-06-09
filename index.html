@@ -571,7 +571,11 @@
       </div>
     </div>
   </footer>
-
+     <div id="bh-tracking-badge" onclick="bhOpenAdmin()">
+    <span class="dot"></span>
+    <span id="bh-badge-count">0 Klicks</span>
+  </div>
+  
   <script>
     // ===== DATA =====
     const advisors = [
@@ -1369,9 +1373,5 @@ function initAdminPanel() {
 initTracking();
 initAdminPanel();
   </script>
-  <div id="bh-tracking-badge" onclick="bhOpenAdmin()">
-  <span class="dot"></span>
-  <span id="bh-badge-count">0 Klicks</span>
-</div>
 </body>
 </html>
